@@ -1,0 +1,18 @@
+language: go
+go:
+  - 1.11.x # go 1.11.x 버전 사용
+
+install:
+  - go get GitHub.com/gohugoio/hugo # 정적 웹 사이트를 빌드하기 위한 hugo 설치
+
+script:
+  - mkdir -p themes/beautifulhugo && git clone https://GitHub.com/halogenica/beautifulhugo.git themes/beautifulhugo # themes/beautifulhugo 디렉토리 생성 및 깃허브에서 clone해오기
+  - hugo --theme beautifulhugo # hugo 커맨드를 실행하여 정적 웹사이트를 빌드
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  GitHub_token: $GITHUB_TOKEN # travis CI가 깃허브에 직접 업로드하기 위한 토큰
+  local_dir: public # hugo에서 기본 output 폴더 명은 public이기 때문에 deploy 할 폴더를 public으로 설정
+  on:
+    branch: main
